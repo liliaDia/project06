@@ -10,22 +10,28 @@
   <body>
     <header>
       <h1>tic tac toe</h1>
-      <h2>player X</h2>
-      <h2>VS</h2>
-      <h2>player O</h2>
+      <h3 id="player1Text">enter player ones name here<input id="player1"type="text"></h3>
+      <h3 id="player2Text">enter player twos name here<input id="player2"type="text"></h3>
+      <h2 id="gameMessage"></h2>
+      <button id="startButton">start</button>
     </header>
 
     <main>
+        
       <div id="board" class="board">
-        <div class="cell">1<span></span></div>
-        <div class="cell">2<span></span></div>
-        <div class="cell">3<span></span></div>
-        <div class="cell">4<span></span></div>
-        <div class="cell">5<span></span></div>
-        <div class="cell">6<span></span></div>
-        <div class="cell">7<span></span></div>
-        <div class="cell">8<span></span></div>
-        <div class="cell">9<span></span></div>
+        
+            <div class="cell row1"><span></span></div>
+            <div class="cell row1"><span></span></div>
+            <div class="cell row1"><span></span></div>
+       
+            <div class="cell row2"><span></span></div>
+            <div class="cell row2"><span></span></div>
+            <div class="cell row2"><span></span></div>
+       
+            <div class="cell row3"><span></span></div>
+            <div class="cell row3"><span></span></div>
+            <div class="cell row3"><span></span></div>
+        
       </div>
     </main>
     <script src="./app.js"></script>
