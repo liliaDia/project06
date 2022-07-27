@@ -5,32 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./style.css" />
-    <title>Document</title>
+    <title>tic tac toe</title>
   </head>
   <body>
     <header>
       <h1>tic tac toe</h1>
-      <h3 id="player1Text">enter player ones name here<input id="player1"type="text"></h3>
-      <h3 id="player2Text">enter player twos name here<input id="player2"type="text"></h3>
+      <h3 id="player1Text">enter player ones name here<input minlength="3" id="player1"type="text"></h3>
+      <h3 id="player2Text">enter player twos name here<input minlength="3" id="player2"type="text"></h3>
       <h2 id="gameMessage"></h2>
       <button id="startButton">start</button>
+      <button class="hide" id="resetButton">reset</button>
     </header>
 
     <main>
         
-      <div id="board" class="board">
+      <div id="board" class="board hide">
         
-            <div class="cell row1"><span></span></div>
-            <div class="cell row1"><span></span></div>
-            <div class="cell row1"><span></span></div>
-       
-            <div class="cell row2"><span></span></div>
-            <div class="cell row2"><span></span></div>
-            <div class="cell row2"><span></span></div>
-       
-            <div class="cell row3"><span></span></div>
-            <div class="cell row3"><span></span></div>
-            <div class="cell row3"><span></span></div>
+            <div  id="00"class="cell"></div>
+            <div  id="01"class="cell"></div>
+            <div  id="02"class="cell"></div>
+            <div  id="10"class="cell"></div>
+            <div  id="11"class="cell"></div>
+            <div  id="12"class="cell"></div>
+            <div  id="20"class="cell"></div>
+            <div  id="21"class="cell"></div>
+            <div  id="22"class="cell"></div>
         
       </div>
     </main>

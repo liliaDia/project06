@@ -2,7 +2,7 @@
 
 header{
   text-align: center;
-  background-color: rgb(206, 38, 38);
+  background-color: rgb(136, 41, 41);
   font-family: 'Cinzel', serif;
   display: block;
   padding: 5px;
@@ -32,7 +32,7 @@ main{
 }
 
 .cell{
-  border: 2px solid rgb(206, 38, 38);
+  border: 2px solid rgb(16, 11, 11);
   background-color: blanchedalmond;
   display: flex;
   justify-content: center;
@@ -42,5 +42,9 @@ main{
 
 .hide{
   display: none;
+}
+
+.winner{
+  background-color: crimson;
 }
 
