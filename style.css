@@ -19,6 +19,8 @@ main{
   border-bottom: 5px black solid;
   border-left: 5px black solid;
   border-right: 5px black solid;
+  height: auto;
+  width: auto;
 
 }
 
@@ -32,7 +34,9 @@ main{
 }
 
 .cell{
-  border: 2px solid rgb(16, 11, 11);
+  border: 3px solid rgb(16, 11, 11);
+  height: 60px;
+  width: 147px;
   background-color: blanchedalmond;
   display: flex;
   justify-content: center;

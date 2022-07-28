@@ -1,8 +1,8 @@
 function createNewGame(player1, player2) {
   return {
     gameOver: false,
-    player1: player1, //player x
-    player2: player2, //player o
+    player1: player1, 
+    player2: player2, 
     currentPlayer: player1,
     playerPositionRow: null,
     playerPositionCol: null,
@@ -14,11 +14,12 @@ function createNewGame(player1, player2) {
       ) {
         this.gameBoard[this.playerPositionRow][this.playerPositionCol] =
           this.currentPlayer;
-
-      } else {
+          } 
+      else {
         return "please pick another spot";
       }
       this.checkWinner([this.playerPositionRow][this.playerPositionCol]);
+     
     },
     gameBoard: [
       [null, null, null],
@@ -64,34 +65,28 @@ function createNewGame(player1, player2) {
     },
 
     checkDraw: function(){
-      for (i=0; i<3; i++){
-        for (let j=0;j<3; j++){
-          if (!this.gameBoard [i][j]===null){
-            this.tie = true
+      console.log(this.gameBoard)
+      for (let i = 0; i < 3; i++){
+          if (this.gameBoard[i].includes(null)){
+            return this.changePlayer()  
           }
         }
-      }
-      this.changePlayer()
+        this.tie = true
       },
 
     changePlayer: function () {
       if (this.currentPlayer === player1) {
         this.currentPlayer = player2;
-        return `${player2}'s turn`
+       return currentTurn.innerText = `${player2input.value}'s turn`
       } else {
         this.currentPlayer = player1;
-        return `${player1}'s turn`
+        return currentTurn.innerText= `${player1input.value}'s turn`
       }
+
     },
   };
 }
 
-//every time a player moves you have to check if they won
-//ways to win 2 diagonals 3horizontal and 3 vertical
-//when you use queryselector all it makes it into an array
-//detirmine if game is over, if game is tie and game won*/
-//set player
-//set current player
 
 let cell = document.querySelectorAll(".cell");
 let board = document.getElementById("board");
@@ -105,6 +100,8 @@ let player1input = document.getElementById("player1");
 let player2input = document.getElementById("player2");
 let player1Name = document.querySelector("#player1Text");
 let player2Name = document.querySelector("#player2Text");
+let currentTurn = document.getElementById("currentTurn");
+if ()
 
 let game = createNewGame(playerX, playerO);
 
@@ -119,29 +116,44 @@ function hide() {
 }
 startBtn.addEventListener("click", function(){
   board.classList.remove("hide")
+  randomPlayer();
 });
 
 
 board.addEventListener("click", function (event) {
+ if (event.target.innerText === ''){
   event.target.innerText = game.currentPlayer;
+ }
+
+ if (currentTurn.innerText === `${player1input.value}'s turn`){
+  currentTurn.innerText = `${player2input.value}'s turn`
+ }
+ else{currentTurn.innerText= `${player1input.value}'s turn`}
+
+ if (game.gameOver){
+  event.target.innerText = ""
+ }
   let playerRow = event.target.id[0];
   let playerCol = event.target.id[1];
   game.playerPositionRow = playerRow;
   game.playerPositionCol = playerCol;
-
+  
   game.updateBoard();
+  
+  //console.log(game.gameBoard)
   if (game.gameOver) {
     gameMessage.innerText= `winner is ${game.currentPlayer}`
     resetBtn.classList.remove("hide")
-    cell.disabled = true
     board.disabled = true
-    
-    //console.log(`winner is ${game.currentPlayer}`);
+    currentTurn.innerText=""
+
   }
+  console.log(game.tie)
 
   if (game.tie){
-    gameMessage.innerText="draw"
-    reset.classList.remove("hide")
+    gameMessage.innerText= "draw"
+    resetBtn.classList.remove("hide")
+    currentTurn.innerText=""
   }
 });
 
@@ -149,7 +161,31 @@ resetBtn.addEventListener("click", function(){
   for(let i = 0; i<cell.length; i++){
   cell[i].innerHTML= ''
   }
+  gameMessage.innerText= ""
+  currentTurn.innerText = ""
+  startBtn.classList.remove("hide")
+  player1input.value = ""
+  player2input.value = ""
+  player1Name.classList.remove("hide");
+  player2Name.classList.remove("hide");
+  board.classList.add("hide")
+
 
   game = createNewGame(playerX, playerO);
 })
+
+
+function randomPlayer(){
+  let randomNum = Math.floor(Math.random() * 2)+1 ;
+  if (randomNum===1){
+    currentTurn.innerText= `${player1input.value}'s turn`
+  }
+
+  if (randomNum===2){
+    currentTurn.innerText= `${player2input.value}'s turn`
+  }
+  
+}
+
+
 
