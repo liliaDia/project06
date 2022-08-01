@@ -1,24 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Mochiy+Pop+One&display=swap');
 header{
   text-align: center;
-  background-color: rgb(136, 41, 41);
+  background-color: rgb(156, 34, 34);
   font-family: 'Cinzel', serif;
   display: block;
   padding: 5px;
   border: 5px black solid;
-  font-size: 20px;
+  font-size: 18px;
   margin-top: 5px;
 }
+
 
 main{
   display: flex;
   justify-content: center;
-  background-color: lightcoral;
+  background-color: darksalmon;
   padding: 40px;
-  border-bottom: 5px black solid;
-  border-left: 5px black solid;
-  border-right: 5px black solid;
+  border-bottom: 6px black solid;
+  border-left: 6px black solid;
+  border-right: 6px black solid;
   height: auto;
   width: auto;
 
@@ -35,20 +36,66 @@ main{
 
 .cell{
   border: 3px solid rgb(16, 11, 11);
-  height: 60px;
-  width: 147px;
+  height: 55px;
+  width: 140px;
   background-color: blanchedalmond;
+  font-family: 'Mochiy Pop One', sans-serif;
   display: flex;
   justify-content: center;
+  align-items: center;
   padding: 40px 0px;
-  font-size: 50px;
+  font-size: 60px;
 }
 
 .hide{
   display: none;
 }
 
-.winner{
-  background-color: crimson;
+button{
+  background-color: #555555;
+  color: blanchedalmond;
+  margin: 4px;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
+input{
+  margin-left: 8px;
+  border-radius: 6px;
+}
+
+@media (max-width: 600px) {
+  header{
+    font-size: 10px;
+  }
+
+  input{
+    width: 60px ;
+  }
+
+  button{
+    font-size: 10px;
+  }
+
+  main{
+    display: flex;
+    height: 400px;
+  }
+  
+  .board
+  {
+   height: 60px;
+    width:60px;
+    justify-content: flex-start;
+    margin-right: 240px;
+  }
+
+  .cell{
+    height: 10px;
+    width: 90px;
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+  }
+}

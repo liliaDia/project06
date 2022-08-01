@@ -2,10 +2,13 @@ function createNewGame(player1, player2) {
  
   return {
     gameOver: false,
-    player1: player1,
+    player1:player1,
     player2: player2,
     computer: false,
-    currentPlayer: player1,
+    player:{
+      currentPlayer: player1,
+      playerName: null
+    },
     playerPositionRow: null,
     playerPositionCol: null,
     tie: false,
@@ -15,17 +18,10 @@ function createNewGame(player1, player2) {
     random: function(){
       let randomNum = Math.floor(Math.random() * 2) + 1;
       if (randomNum === 1) {
-      this.currentPlayer= player1
+      this.player.currentPlayer= player1;
       }
-      if(randomNum===2){
-        this.currentPlayer= player2
-      }
-    },
-
-    computerStarts: function(){
-      if (this.computer){
-        this.playerPositionRow=1;
-        this.playerPositionCol=1;
+      else{
+        this.player.currentPlayer= player2;
       }
     },
 
@@ -35,7 +31,7 @@ function createNewGame(player1, player2) {
         this.gameBoard[this.playerPositionRow][this.playerPositionCol] === null
       ) {
         this.gameBoard[this.playerPositionRow][this.playerPositionCol] =
-          this.currentPlayer;
+          this.player.currentPlayer;
       } 
       this.updateUIGameboard();
       this.checkWinner([this.playerPositionRow][this.playerPositionCol]);
@@ -45,7 +41,7 @@ function createNewGame(player1, player2) {
 
       let cellId = `${this.playerPositionRow}${this.playerPositionCol}`
       if (document.getElementById(cellId).innerHTML===''){
-        document.getElementById(cellId).innerHTML=this.currentPlayer;
+        document.getElementById(cellId).innerHTML=this.player.currentPlayer;
       }
     },
 
@@ -58,32 +54,32 @@ function createNewGame(player1, player2) {
     checkWinner: function () {
       for (let i = 0; i < 3; i++) {
         if (
-          this.gameBoard[i][0] === this.currentPlayer &&
-          this.gameBoard[i][1] === this.currentPlayer &&
-          this.gameBoard[i][2] === this.currentPlayer
+          this.gameBoard[i][0] === this.player.currentPlayer &&
+          this.gameBoard[i][1] === this.player.currentPlayer &&
+          this.gameBoard[i][2] === this.player.currentPlayer
         ) {
           return (this.gameOver = true);
         }
         for (let j = 0; j < 3; j++) {
           if (
-            this.gameBoard[0][j] === this.currentPlayer &&
-            this.gameBoard[1][j] === this.currentPlayer &&
-            this.gameBoard[2][j] === this.currentPlayer
+            this.gameBoard[0][j] === this.player.currentPlayer &&
+            this.gameBoard[1][j] === this.player.currentPlayer &&
+            this.gameBoard[2][j] === this.player.currentPlayer
           ) {
             return (this.gameOver = true);
           }
         }
         if (
-          this.gameBoard[0][0] === this.currentPlayer &&
-          this.gameBoard[1][1] === this.currentPlayer &&
-          this.gameBoard[2][2] === this.currentPlayer
+          this.gameBoard[0][0] === this.player.currentPlayer &&
+          this.gameBoard[1][1] === this.player.currentPlayer &&
+          this.gameBoard[2][2] === this.player.currentPlayer
         ) {
           return (this.gameOver = true);
         }
         if (
-          this.gameBoard[0][2] === this.currentPlayer &&
-          this.gameBoard[1][1] === this.currentPlayer &&
-          this.gameBoard[2][0] === this.currentPlayer
+          this.gameBoard[0][2] === this.player.currentPlayer &&
+          this.gameBoard[1][1] === this.player.currentPlayer &&
+          this.gameBoard[2][0] === this.player.currentPlayer
         ) {
           return (this.gameOver = true);
         }
@@ -97,18 +93,20 @@ function createNewGame(player1, player2) {
           return this.changePlayer();
         }
       }
+      this.gameOver = true;
       this.tie = true;
     },
 
     changePlayer: function () {
-      if (this.currentPlayer === player1) {
-        this.currentPlayer = player2;
+      if (this.player.currentPlayer === player1) {
+        this.player.currentPlayer = player2;
+        this.player.playerName = game.name2
         if (this.computer){
           this.generateMove();
-         // this.currentPlayer = player1;
         }
       } else {
-        this.currentPlayer = player1;
+        this.player.currentPlayer = player1;
+        this.player.playerName = game.name1
       }
     },
 
@@ -132,8 +130,7 @@ const cell = document.querySelectorAll(".cell");
 const board = document.getElementById("board");
 const playerX = "X";
 const playerO = "O";
-let currentPlayer = playerX;
-let gameMessage = document.getElementById("gameMessage");
+const gameMessage = document.getElementById("gameMessage");
 const startBtn = document.getElementById("startButton");
 const resetBtn = document.getElementById("resetButton");
 const player1input = document.getElementById("player1");
@@ -149,27 +146,30 @@ function initializeGame(){
   if (player2input.value==='') {
     player2input.value = "computer";
     game.computer=true
-     if (game.currentPlayer === playerO)
+     if (game.player.currentPlayer === playerO)
      {
         document.getElementById("11").innerHTML= game.player2;
         game.gameBoard[1][1]=game.player2;
-        game.currentPlayer= game.player1
-        currentTurn.innerText= "computer Starts"
+        game.player.currentPlayer= game.player1;
+        currentTurn.innerText= "computer Starts";
      }
+     else if (game.player.currentPlayer === playerX){
+      currentTurn.innerText=`${player1input.value} starts`
+     }
+
   }
-  game.name1=player1input.value
-  game.name2=player2input.value
-  console.log(game.name1)
-  if (game.currentPlayer===playerX){
+  game.name1=player1input.value;
+  game.name2=player2input.value;
+ 
+  if (game.player.currentPlayer===playerX && game.computer===false){
     currentTurn.innerText=`${player1input.value} starts`
   }
-  else if (game.currentPlayer===playerO && game.computer===false){
+  else if (game.player.currentPlayer===playerO && game.computer===false){
     currentTurn.innerText=`${player2input.value} starts`
   }
   gameMessage.innerText = `${player1input.value} VS. ${player2input.value}`;
 }
 
-startBtn.addEventListener("click", hide);
 
 function resetGame() {
   for (let i = 0; i < cell.length; i++) {
@@ -191,40 +191,20 @@ function hide() {
   player1Text.className = "hide";
   player2Text.className = "hide";
   startBtn.className = "hide";
-  game.random();
-  if (player2input.value==='') {
-    player2input.value = "computer";
-    game.computer=true
-     if (game.currentPlayer === playerO)
-     {
-        document.getElementById("11").innerHTML= game.player2;
-        game.gameBoard[1][1]=game.player2;
-        game.currentPlayer= game.player1
-        currentTurn.innerText= "computer Starts"
-     }
-     else if (game.currentPlayer === playerX){
-      currentTurn.innerText=`${player1input.value} starts`
-     }
-
-  }
-  game.name1=player1input.value
-  game.name2=player2input.value
-  console.log(game.name1)
-  if (game.currentPlayer===playerX && game.computer===false){
-    currentTurn.innerText=`${player1input.value} starts`
-  }
-  else if (game.currentPlayer===playerO && game.computer===false){
-    currentTurn.innerText=`${player2input.value} starts`
-  }
-  gameMessage.innerText = `${player1input.value} VS. ${player2input.value}`;
 }
 
-
 startBtn.addEventListener("click", function () {
+  if (player1input.value.length>0){
+  hide();
   board.classList.remove("hide");
+  initializeGame();
+  }
+  else{currentTurn.innerText="please enter your name"
+  player1Text.className.remove("hide");
+  player2Text.className.remove("hide");
+  }
+
 });
-
-
 
 board.addEventListener("click", function (event) {
   if (game.gameOver) {
@@ -239,14 +219,8 @@ board.addEventListener("click", function (event) {
   game.updateBoard();
  
   if (game.gameOver) {
-    gameMessage.innerText = `winner is ${game.currentPlayer}`;
-    if (gameMessage.innerText === `winner is X`)
-    {currentTurn.innerText = `winner is ${game.name1}`
-    }
-    else if (gameMessage.innerText === `winner is O`)
-    {currentTurn.innerText = `winner is ${game.name2}`
-    }
-
+    gameMessage.innerText = `winner is ${game.player.playerName}`;
+    currentTurn.innerText= "";
    if (game.tie) {
     gameMessage.innerText = "draw";
     currentTurn.innerText = "";
